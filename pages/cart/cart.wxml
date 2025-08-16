@@ -1,0 +1,67 @@
+<!--pages/cart/cart.wxml-->
+<view class="container">
+  <!-- 购物车列表 -->
+  <view class="cart-list" wx:if="{{!loading && cartItems.length > 0}}">
+    <view class="cart-item" wx:for="{{cartItems}}" wx:key="id">
+      <!-- 选择框 -->
+      <view class="select-box" bindtap="onSelectItem" data-index="{{index}}">
+        <icon type="{{item.selected ? 'success' : 'circle'}}" size="20" color="{{item.selected ? '#ff6b35' : '#ccc'}}"/>
+      </view>
+      
+      <!-- 商品信息 -->
+      <image class="product-image" src="{{item.image}}" mode="aspectFill" />
+      
+      <view class="product-info">
+        <text class="product-name">{{item.name}}</text>
+        <text class="product-price">¥{{item.price}}</text>
+        
+        <!-- 数量控制 -->
+        <view class="quantity-control">
+          <view class="quantity-btn" bindtap="onQuantityChange" data-index="{{index}}" data-type="minus">
+            <text>-</text>
+          </view>
+          <text class="quantity">{{item.quantity}}</text>
+          <view class="quantity-btn" bindtap="onQuantityChange" data-index="{{index}}" data-type="plus">
+            <text>+</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 删除按钮 -->
+      <view class="delete-btn" bindtap="onDeleteItem" data-index="{{index}}">
+        <text>删除</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 空购物车 -->
+  <view class="empty-cart" wx:if="{{!loading && cartItems.length === 0}}">
+    <image class="empty-image" src="/images/empty-cart.png" />
+    <text class="empty-text">购物车空空如也</text>
+    <navigator url="/pages/index/index" class="go-shopping">
+      <text>去逛逛</text>
+    </navigator>
+  </view>
+  
+  <!-- 加载状态 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>
+
+<!-- 底部结算栏 -->
+<view class="checkout-bar" wx:if="{{cartItems.length > 0}}">
+  <view class="select-all" bindtap="onSelectAll">
+    <icon type="{{selectedAll ? 'success' : 'circle'}}" size="20" color="{{selectedAll ? '#ff6b35' : '#ccc'}}"/>
+    <text>全选</text>
+  </view>
+  
+  <view class="total-info">
+    <text class="total-text">合计：</text>
+    <text class="total-price">¥{{totalPrice}}</text>
+  </view>
+  
+  <view class="checkout-btn" bindtap="onCheckout">
+    <text>结算</text>
+  </view>
+</view>

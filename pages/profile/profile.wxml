@@ -1,0 +1,42 @@
+<!--pages/profile/profile.wxml-->
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="user-section">
+    <view class="user-info" wx:if="{{hasUserInfo}}">
+      <image class="avatar" src="{{userInfo.avatarUrl}}" />
+      <view class="user-details">
+        <text class="nickname">{{userInfo.nickName}}</text>
+        <text class="desc">微信用户</text>
+      </view>
+      <view class="logout-btn" bindtap="onLogout">
+        <text>退出</text>
+      </view>
+    </view>
+    
+    <view class="login-section" wx:else>
+      <image class="default-avatar" src="/images/default-avatar.png" />
+      <view class="login-info">
+        <text class="login-title">点击登录</text>
+        <text class="login-desc">登录后可查看订单、收藏等信息</text>
+      </view>
+      <view class="login-btn" bindtap="getUserProfile">
+        <text>登录</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="menu-item" wx:for="{{menuItems}}" wx:key="id" 
+          bindtap="onMenuTap" data-url="{{item.url}}">
+      <image class="menu-icon" src="{{item.icon}}" />
+      <text class="menu-title">{{item.title}}</text>
+      <text class="menu-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-section">
+    <text class="version-text">微信商城 v1.0.0</text>
+  </view>
+</view>
